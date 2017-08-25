@@ -1,0 +1,20 @@
+{
+  "name": "d2a",
+  "version": "0.0.1",
+  "description": "decisions to actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack src/index.js bin/app.js --watch"
+  },
+  "author": "Tal Yaron",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "vis": "^4.20.1",
+    "webpack": "^3.5.5"
+  },
+  "bin": {
+    "d2a": "app.js"
+  }
+}

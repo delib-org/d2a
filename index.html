@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Decisions 2 Actions</title>
+    <meta charset="utf-8">
+    <link href="src/css/visCssMin.css" rel="stylesheet" type="text/css">
+    <link href="src/css/stylesheet.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <h1>Hi</h1>
+    <div id='updateNode' class="updateElement">
+      <div id='updateNodePanel' class="updateElementPanel">
+        <form>
+          <input type="text" id='newNodeInput' autofocus=true><br>
+          <button id='updateNodeBtn'>Rename</button>
+        </form>
+      </div>
+    </div>
+    <div id='updateEdge' class="updateElement">
+      <div id='updateEdgePanel' class="updateElementPanel">
+        <form>
+          <input type="text" id='newEdgeInput' autofocus=true><br>
+          <button id='updateEdgeBtn' class="updateElementBtn">Rename</button>
+        </form>
+      </div>
+    </div>
+    <div id='myNetwork'></div>
+    <script src="bin/app.js"></script>    
+  </body>
+</html>
