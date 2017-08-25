@@ -75,11 +75,11 @@ $('#updateEdge').hide()
 
 // create an array with nodes
 var nodes = new vis.DataSet([
-  {id: 10, label: 'Node 10'},
-  {id: 2, label: 'Node 2'},
-  {id: 3, label: 'Node 3'},
-  {id: 4, label: 'Node 4'},
-  {id: 5, label: 'Node 5'}
+  {id: 10, label: 'Node 10', shape:'box'},
+  {id: 2, label: 'Node 2', shape:'box'},
+  {id: 3, label: 'Node 3', shape:'box'},
+  {id: 4, label: 'Node 4', shape:'box'},
+  {id: 5, label: 'Node 5', shape:'box'}
 ]);
 
 // create an array with edges
@@ -109,7 +109,10 @@ var network = new vis.Network(container, data, options);
 //module.exports = network; 
 
 network.on('click', function(prm){
-  
+  if (prm.nodes.length >0){
+    console.log('clicked on a node')
+    console.dir(prm)
+  }
 });
 
 var nodeObj = {id:'', label:''}
@@ -126,7 +129,7 @@ network.on('doubleClick', function(prm){
     
     $('#updateNode').show(); 
     $('#newNodeInput').focus().val(nodeObj.label);
-  } else if (prm.edges.length >0) {
+  } else if (prm.edges.length >0 && prm.nodes.length == 0) {
     //if clicked on an edge   
     
     edgeObj = edges._data[prm.edges[0]]
@@ -144,10 +147,10 @@ network.on('doubleClick', function(prm){
 
     nodeObj.id = uuidv4();
     
-    nodes.add({id:nodeObj.id,label:"new text", x:nodeX, y:nodeY})
+    nodes.add({id:nodeObj.id,label:"new text", x:nodeX, y:nodeY, shape:'box'})
     
     $('#updateNode').show(200); 
-    $('#newNameInput').focus();
+    $('#newNodeInput').focus().val('');
 
   }
 
@@ -187,7 +190,7 @@ document.getElementById("updateNodeBtn").addEventListener("click", function(even
   var newName =  $('#newNodeInput').val()
   $('#newNameInput').val('')
 
-  nodes.update({id:nodeObj.id, label: newName})
+  nodes.update({id:nodeObj.id, label: newName, shape:'box'})
 
   $('#updateNode').hide(300)
 
@@ -199,7 +202,7 @@ document.getElementById("updateNodeBtn").addEventListener("click", function(even
 document.getElementById("updateEdgeBtn").addEventListener("click", function(event){
 
   event.preventDefault()
-  console.dir(event)
+  
   var newLabel =  $('#newEdgeInput').val()
   $('#newEdgeInput').val('')
 
@@ -213,8 +216,7 @@ document.getElementById("updateEdgeBtn").addEventListener("click", function(even
 
 //cancel editing, by clicking on the screen
 document.getElementById("updateNode").addEventListener('click', function(event){
-  console.log('cancel');
-  console.dir(event)
+  
   $('#updateNode').hide(300)
 
   nodeObj = {id:'', label:''};
