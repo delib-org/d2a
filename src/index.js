@@ -42,7 +42,19 @@ var network = new vis.Network(container, data, options);
 network.on('click', function(prm){
   if (prm.nodes.length >0){
     console.log('clicked on a node')
-    console.dir(prm)
+
+    var deleteNodeBtnId = prm.nodes[0].toString()+'_deleteBtn';
+    console.log(deleteNodeBtnId);
+    nodes.add({id:deleteNodeBtnId,
+               shape:'icon',
+               mass:0.2,
+               icon:{
+                 face:'FontAwesome',
+                 size:'18',
+                 code: '\uf1f8',
+                 color:'#fa1212'
+               }})
+
   }
 });
 
@@ -55,31 +67,31 @@ network.on('doubleClick', function(prm){
   if(prm.nodes.length > 0){    
 
     //if clicked on a node
-    
+
     nodeObj = nodes._data[prm.nodes[0]];    
-    
+
     $('#updateNode').show(); 
     $('#newNodeInput').focus().val(nodeObj.label);
   } else if (prm.edges.length >0 && prm.nodes.length == 0) {
     //if clicked on an edge   
-    
+
     edgeObj = edges._data[prm.edges[0]]
-    
+
     $('#updateEdge').show()
     $('#newEdgeInput').focus().val(edgeObj.label);
-    
-    
-    
+
+
+
   } else {
     //if clicked on an empty space
-    
+
     var nodeX = prm.pointer.canvas.x;
     var nodeY = prm.pointer.canvas.y;
 
     nodeObj.id = uuidv4();
-    
+
     nodes.add({id:nodeObj.id,label:"new text", x:nodeX, y:nodeY, shape:'box'})
-    
+
     $('#updateNode').show(200); 
     $('#newNodeInput').focus().val('');
 
@@ -90,25 +102,25 @@ network.on('doubleClick', function(prm){
 network.on('dragging', function(prm){
   var pointerPosition = prm.pointer.DOM;
   var dragedNode = prm.nodes[0];
-  
+
   var dragUponNode = whichNodeColide(dragedNode, pointerPosition)
-  
+
   if(dragUponNode != undefined && dragedNode != dragUponNode){
-        
+
     var doEdgeExists = edges.get({
       filter: function(item){        
         return (item.from == dragedNode &&  item.to == dragUponNode )
       }
     })
-    
-    
+
+
     if (doEdgeExists.length == 0){
       //if an edge do not exit, then create an edge
-     
+
       edges.update({from:dragedNode, to:dragUponNode })
     } 
-    
-    
+
+
   }
 })
 
@@ -133,7 +145,7 @@ document.getElementById("updateNodeBtn").addEventListener("click", function(even
 document.getElementById("updateEdgeBtn").addEventListener("click", function(event){
 
   event.preventDefault()
-  
+
   var newLabel =  $('#newEdgeInput').val()
   $('#newEdgeInput').val('')
 
@@ -147,7 +159,7 @@ document.getElementById("updateEdgeBtn").addEventListener("click", function(even
 
 //cancel editing, by clicking on the screen
 document.getElementById("updateNode").addEventListener('click', function(event){
-  
+
   $('#updateNode').hide(300)
 
   nodeObj = {id:'', label:''};
@@ -164,21 +176,21 @@ function uuidv4() {
 }
 
 function whichNodeColide(dragedNode, pointerPosition){
-  
+
   var positionsToCheck = [{x:-30,y:0},{x:30,y:0},{x:0,y:-30},{x:0,y:+30}]
-  
+
   for (var i in positionsToCheck){
     var whichNode = network.getNodeAt({
       x: pointerPosition.x +positionsToCheck[i].x,
       y: pointerPosition.y+ positionsToCheck[i].y
     });
     if (whichNode !=undefined && dragedNode != whichNode){
-      
+
       return whichNode
-     
+
     }
   }
   return undefined;
-  
-  
+
+
 }

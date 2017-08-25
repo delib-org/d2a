@@ -1,0 +1,10 @@
++ delete node and delete edge
+
+# test
++ dfdf
++ dddsf
+
+# delete node and edge
+- delete node
+- delete edge
+
