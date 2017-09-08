@@ -37,25 +37,8 @@ var options = {
 // initialize your network!
 var network = new vis.Network(container, data, options);
 
-//module.exports = network; 
-
 network.on('click', function(prm){
-  if (prm.nodes.length >0){
-    console.log('clicked on a node')
 
-    var deleteNodeBtnId = prm.nodes[0].toString()+'_deleteBtn';
-    console.log(deleteNodeBtnId);
-    nodes.add({id:deleteNodeBtnId,
-               shape:'icon',
-               mass:0.2,
-               icon:{
-                 face:'FontAwesome',
-                 size:'18',
-                 code: '\uf1f8',
-                 color:'#fa1212'
-               }})
-
-  }
 });
 
 var nodeObj = {id:'', label:''}
@@ -64,16 +47,18 @@ var edgeObj = {id:'', label:''}
 network.on('doubleClick', function(prm){
 
 
-  if(prm.nodes.length > 0){    
+  if(prm.nodes.length > 0){
 
     //if clicked on a node
 
-    nodeObj = nodes._data[prm.nodes[0]];    
+    nodeObj = nodes._data[prm.nodes[0]];
 
-    $('#updateNode').show(); 
+    //show update panel
+    $('#updateNode').show();
     $('#newNodeInput').focus().val(nodeObj.label);
+
   } else if (prm.edges.length >0 && prm.nodes.length == 0) {
-    //if clicked on an edge   
+    //if clicked on an edge
 
     edgeObj = edges._data[prm.edges[0]]
 
@@ -83,7 +68,7 @@ network.on('doubleClick', function(prm){
 
 
   } else {
-    //if clicked on an empty space
+    //if clicked on an empty space create new node
 
     var nodeX = prm.pointer.canvas.x;
     var nodeY = prm.pointer.canvas.y;
@@ -92,7 +77,7 @@ network.on('doubleClick', function(prm){
 
     nodes.add({id:nodeObj.id,label:"new text", x:nodeX, y:nodeY, shape:'box'})
 
-    $('#updateNode').show(200); 
+    $('#updateNode').show(200);
     $('#newNodeInput').focus().val('');
 
   }
@@ -108,7 +93,7 @@ network.on('dragging', function(prm){
   if(dragUponNode != undefined && dragedNode != dragUponNode){
 
     var doEdgeExists = edges.get({
-      filter: function(item){        
+      filter: function(item){
         return (item.from == dragedNode &&  item.to == dragUponNode )
       }
     })
@@ -118,7 +103,7 @@ network.on('dragging', function(prm){
       //if an edge do not exit, then create an edge
 
       edges.update({from:dragedNode, to:dragUponNode })
-    } 
+    }
 
 
   }
@@ -140,6 +125,18 @@ document.getElementById("updateNodeBtn").addEventListener("click", function(even
   nodeObj = {id:'', label:''};
 
 });
+
+//delete node
+document.getElementById('deleteNodeBtn').addEventListener('click', function(event){
+  event.preventDefault()
+  console.log(nodeObj.id)
+  //get edges that are connected
+  var connectedEdges = network.getConnectedEdges(nodeObj.id)
+
+  edges.remove(connectedEdges);
+  nodes.remove(nodeObj.id);
+  console.dir(edges)
+})
 
 //update edge button click
 document.getElementById("updateEdgeBtn").addEventListener("click", function(event){

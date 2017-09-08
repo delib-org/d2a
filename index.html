@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Decisions 2 Actions</title>
-    <meta charset="utf-8">
-    <link href="src/css/visCssMin.css" rel="stylesheet" type="text/css">
-    <link href="src/css/stylesheet.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href='src/css/FontAwsome/css/font-awesome.min.css'>
 
-  </head>
-  <body>
-    <h1>Hi</h1>
-    <div id='updateNode' class="updateElement">
-      <div id='updateNodePanel' class="updateElementPanel">
-        <form>
-          <input type="text" id='newNodeInput' autofocus=true><br>
-          <button id='updateNodeBtn'>Rename</button>
-        </form>
-      </div>
+<head>
+  <title>Decisions 2 Actions</title>
+  <meta charset="utf-8">
+  <link href="src/css/visCssMin.css" rel="stylesheet" type="text/css">
+  <link href='helpers/pure-min.css' rel="stylesheet" type="text/css">
+  <link href="src/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href='src/css/FontAwsome/css/font-awesome.min.css'>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+</head>
+
+<body>
+  <h1>Hi</h1>
+  <!-- Edit Node  -->
+  <div id='updateNode' class="updateElement">
+    <div id='updateNodePanel' class="updateElementPanel">
+      <form>
+        <input type="text" id='newNodeInput' autofocus=true><br>
+        <button id='updateNodeBtn' class="button-ok pure-button">Rename</button>
+        <button id='deleteNodeBtn' class="button-error pure-button">
+          <i class="fa fa-trash"></i>
+          Delete
+        </button>
+      </form>
     </div>
-    <div id='updateEdge' class="updateElement">
-      <div id='updateEdgePanel' class="updateElementPanel">
-        <form>
-          <input type="text" id='newEdgeInput' autofocus=true><br>
-          <button id='updateEdgeBtn' class="updateElementBtn">Rename</button>
-        </form>
-      </div>
+  </div>
+  <!--  Edit Edge -->
+  <div id='updateEdge' class="updateElement">
+    <div id='updateEdgePanel' class="updateElementPanel">
+      <form>
+        <input type="text" id='newEdgeInput' autofocus=true><br>
+        <button id='updateEdgeBtn' class="pure-button updateElementBtn">Rename</button>
+      </form>
     </div>
-    <div id='myNetwork'></div>
-    <script src="bin/app.js"></script>    
-  </body>
+  </div>
+  <div id='myNetwork'></div>
+  <script src="bin/app.js"></script>
+</body>
+
 </html>
