@@ -84,10 +84,10 @@ var nodes = new vis.DataSet([
 
 // create an array with edges
 var edges = new vis.DataSet([
-  {from: 10, to: 3},
-  {from: 10, to: 2},
-  {from: 2, to: 4},
-  {from: 2, to: 5}
+  {from: 10, to: 3, arrows:{to:{enabled:true}}},
+  {from: 10, to: 2, arrows:{to:{enabled:true}}},
+  {from: 2, to: 4, arrows:{to:{enabled:true}}},
+  {from: 2, to: 5, arrows:{to:{enabled:true}}}
 ]);
 
 // create a network
@@ -171,7 +171,7 @@ network.on('dragging', function(prm){
     if (doEdgeExists.length == 0){
       //if an edge do not exit, then create an edge
 
-      edges.update({from:dragedNode, to:dragUponNode })
+      edges.update({from:dragedNode, to:dragUponNode, arrows:{to:{enabled:true}} })
     }
 
 
@@ -204,7 +204,7 @@ document.getElementById('deleteNodeBtn').addEventListener('click', function(even
 
   edges.remove(connectedEdges);
   nodes.remove(nodeObj.id);
-  console.dir(edges)
+  
 })
 
 //update edge button click
