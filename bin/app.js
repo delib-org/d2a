@@ -223,6 +223,17 @@ document.getElementById("updateEdgeBtn").addEventListener("click", function(even
 
 });
 
+//delete nodeObj
+//update edge button click
+document.getElementById("deleteEdgeBtn").addEventListener("click", function(event){
+
+  event.preventDefault()
+
+  edges.remove(edgeObj.id);
+  $('#updateEdge').hide(300)
+
+});
+
 //cancel editing, by clicking on the screen
 document.getElementById("updateNode").addEventListener('click', function(event){
 
