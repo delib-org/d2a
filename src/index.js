@@ -4,21 +4,121 @@ var $ = require('jquery');
 $('#updateNode').hide()
 $('#updateEdge').hide()
 
+//change canvas size according to window size
+$('#myNetwork').height(window.innerHeight).width(window.innerWidth);
+$(window).resize(function() {
+  $('#myNetwork').height(window.innerHeight).width(window.innerWidth);
+});
+
+
 // create an array with nodes
-var nodes = new vis.DataSet([
-  {id: 10, label: 'Node 10', shape:'box'},
-  {id: 2, label: 'Node 2', shape:'box'},
-  {id: 3, label: 'Node 3', shape:'box'},
-  {id: 4, label: 'Node 4', shape:'box'},
-  {id: 5, label: 'Node 5', shape:'box'}
+var nodes = new vis.DataSet([{
+    id: 10,
+    label: 'Node 10',
+    type: 'option',
+    shape: 'box',
+    color:{
+      background:'#C0CA33',
+      highlight: '#AFB42B',
+      border:'#827717'
+    },
+    font:{
+      color: '#424242'
+    }
+  },
+  {
+    id: 2,
+    label: 'Node 2',
+    type: 'option',
+    shape: 'box',
+    color:{
+      background:'#C0CA33',
+      highlight: '#AFB42B',
+      border:'#827717'
+    },
+    font:{
+      color: '#424242'
+    }
+  },
+  {
+    id: 3,
+    label: 'Node 3',    
+    type: 'question',
+    shape: 'ellipse',
+    color:{
+      background:'#039BE5',
+      highlight: '#0277BD'
+    },
+    font:{
+      color: 'white'
+    }
+  },
+  {
+    id: 4,
+    label: 'Node 4',
+    type: 'option',
+    shape: 'box',
+    color:{
+      background:'#C0CA33',
+      highlight: '#AFB42B',
+      border:'#827717'
+    },
+    font:{
+      color: '#424242'
+    }
+  },
+  {
+    id: 5,
+    label: 'Node 5',
+    type: 'question',
+    shape: 'ellipse',
+    color:{
+      background:'#039BE5',
+      highlight: '#0277BD'
+    },
+    font:{
+      color: 'white'
+    }
+  }
 ]);
 
 // create an array with edges
-var edges = new vis.DataSet([
-  {from: 10, to: 3, arrows:{to:{enabled:true}}},
-  {from: 10, to: 2, arrows:{to:{enabled:true}}},
-  {from: 2, to: 4, arrows:{to:{enabled:true}}},
-  {from: 2, to: 5, arrows:{to:{enabled:true}}}
+var edges = new vis.DataSet([{
+    from: 10,
+    to: 3,
+    arrows: {
+      to: {
+        enabled: true
+      }
+    }
+  },
+  {
+    from: 10,
+    to: 2,
+    arrows: {
+      to: {
+        enabled: true
+      }
+    }
+  },
+  {
+    from: 2,
+    to: 4,
+    arrows: {
+      to: {
+        enabled: true
+      }
+    }
+  },
+  {
+    from: 2,
+    to: 5,
+    arrows: {
+      to: {
+        enabled: true
+      }
+    }
+  }
 ]);
 
 // create a network
@@ -31,23 +131,31 @@ var data = {
 };
 
 var options = {
-  interaction:{hover:true}
+  interaction: {
+    hover: true
+  }
 };
 
 // initialize your network!
 var network = new vis.Network(container, data, options);
 
-network.on('click', function(prm){
+network.on('click', function(prm) {
 
 });
 
-var nodeObj = {id:'', label:''}
-var edgeObj = {id:'', label:''}
+var nodeObj = {
+  id: '',
+  label: ''
+}
+var edgeObj = {
+  id: '',
+  label: ''
+}
 
-network.on('doubleClick', function(prm){
+network.on('doubleClick', function(prm) {
 
 
-  if(prm.nodes.length > 0){
+  if (prm.nodes.length > 0) {
 
     //if clicked on a node
 
@@ -57,7 +165,24 @@ network.on('doubleClick', function(prm){
     $('#updateNode').show();
     $('#newNodeInput').focus().val(nodeObj.label);
 
-  } else if (prm.edges.length >0 && prm.nodes.length == 0) {
+    //change type buttons according to type
+    switch (nodeObj.type) {
+      case 'option':
+        $('.option').css('background', '#C0CA33');
+        $('.question').css('background', '#e0e0e0');
+        break;
+      case 'question':
+        $('.question').css('background', '#039BE5');
+        $('.option').css('background', '#e0e0e0');
+        break;
+      default:
+        $('.question').css('background', '#e0e0e0');
+        $('.option').css('background', '#e0e0e0');
+
+    }
+
+
+  } else if (prm.edges.length > 0 && prm.nodes.length == 0) {
     //if clicked on an edge
 
     edgeObj = edges._data[prm.edges[0]]
@@ -75,7 +200,13 @@ network.on('doubleClick', function(prm){
 
     nodeObj.id = uuidv4();
 
-    nodes.add({id:nodeObj.id,label:"new text", x:nodeX, y:nodeY, shape:'box'})
+    nodes.add({
+      id: nodeObj.id,
+      label: "new text",
+      x: nodeX,
+      y: nodeY,
+      shape: 'box'
+    })
 
     $('#updateNode').show(200);
     $('#newNodeInput').focus().val('');
@@ -84,25 +215,33 @@ network.on('doubleClick', function(prm){
 
 });
 
-network.on('dragging', function(prm){
+network.on('dragging', function(prm) {
   var pointerPosition = prm.pointer.DOM;
   var dragedNode = prm.nodes[0];
 
   var dragUponNode = whichNodeColide(dragedNode, pointerPosition)
 
-  if(dragUponNode != undefined && dragedNode != dragUponNode){
+  if (dragUponNode != undefined && dragedNode != dragUponNode) {
 
     var doEdgeExists = edges.get({
-      filter: function(item){
-        return (item.from == dragedNode &&  item.to == dragUponNode )
+      filter: function(item) {
+        return (item.from == dragedNode && item.to == dragUponNode)
       }
     })
 
 
-    if (doEdgeExists.length == 0){
+    if (doEdgeExists.length == 0) {
       //if an edge do not exit, then create an edge
 
-      edges.update({from:dragedNode, to:dragUponNode, arrows:{to:{enabled:true}} })
+      edges.update({
+        from: dragedNode,
+        to: dragUponNode,
+        arrows: {
+          to: {
+            enabled: true
+          }
+        }
+      })
     }
 
 
@@ -112,22 +251,29 @@ network.on('dragging', function(prm){
 // --- events in the DOM ---
 
 //update node button click
-document.getElementById("updateNodeBtn").addEventListener("click", function(event){
+document.getElementById("updateNodeBtn").addEventListener("click", function(event) {
 
   event.preventDefault()
-  var newName =  $('#newNodeInput').val()
+  var newName = $('#newNodeInput').val()
   $('#newNameInput').val('')
 
-  nodes.update({id:nodeObj.id, label: newName, shape:'box'})
+  nodes.update({
+    id: nodeObj.id,
+    label: newName,
+    shape: 'box'
+  })
 
   $('#updateNode').hide(300)
 
-  nodeObj = {id:'', label:''};
+  nodeObj = {
+    id: '',
+    label: ''
+  };
 
 });
 
 //delete node
-document.getElementById('deleteNodeBtn').addEventListener('click', function(event){
+document.getElementById('deleteNodeBtn').addEventListener('click', function(event) {
   event.preventDefault()
   console.log(nodeObj.id)
   //get edges that are connected
@@ -135,28 +281,77 @@ document.getElementById('deleteNodeBtn').addEventListener('click', function(even
 
   edges.remove(connectedEdges);
   nodes.remove(nodeObj.id);
-  
+
 })
 
+//change node to option
+document.getElementById('optionBtn').addEventListener('click', function(event) {
+
+  event.preventDefault();
+
+  nodes.update({
+    id: nodeObj.id,
+    type: 'option',
+    shape: 'box',
+    color:{
+      background:'#C0CA33',
+      highlight: '#AFB42B',
+      border:'#827717'
+    },
+    font:{
+      color: '#424242'
+    }
+  });
+
+})
+
+//change node to question
+document.getElementById('questionBtn').addEventListener('click', function(event) {
+
+  event.preventDefault();
+
+  nodes.update({
+    id: nodeObj.id,
+    type: 'question',
+    shape: 'ellipse',
+    color:{
+      background:'#039BE5',
+      highlight: '#0277BD'
+    },
+    font:{
+      color: 'white'
+    }
+  });
+
+})
+
+// -- edge events ---
+
 //update edge button click
-document.getElementById("updateEdgeBtn").addEventListener("click", function(event){
+document.getElementById("updateEdgeBtn").addEventListener("click", function(event) {
 
   event.preventDefault()
 
-  var newLabel =  $('#newEdgeInput').val()
+  var newLabel = $('#newEdgeInput').val()
   $('#newEdgeInput').val('')
 
-  edges.update({id:edgeObj.id, label: newLabel})
+  edges.update({
+    id: edgeObj.id,
+    label: newLabel
+  })
 
   $('#updateEdge').hide(300)
 
-  edgeObj = {id:'', label:''};
+  edgeObj = {
+    id: '',
+    label: ''
+  };
 
 });
 
 //delete nodeObj
 //update edge button click
-document.getElementById("deleteEdgeBtn").addEventListener("click", function(event){
+document.getElementById("deleteEdgeBtn").addEventListener("click", function(event) {
 
   event.preventDefault()
 
@@ -166,11 +361,14 @@ document.getElementById("deleteEdgeBtn").addEventListener("click", function(even
 });
 
 //cancel editing, by clicking on the screen
-document.getElementById("updateNode").addEventListener('click', function(event){
+document.getElementById("updateNode").addEventListener('click', function(event) {
 
   $('#updateNode').hide(300)
 
-  nodeObj = {id:'', label:''};
+  nodeObj = {
+    id: '',
+    label: ''
+  };
 })
 
 
@@ -178,21 +376,34 @@ document.getElementById("updateNode").addEventListener('click', function(event){
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    var r = Math.random() * 16 | 0,
+      v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
 }
 
-function whichNodeColide(dragedNode, pointerPosition){
+function whichNodeColide(dragedNode, pointerPosition) {
 
-  var positionsToCheck = [{x:-30,y:0},{x:30,y:0},{x:0,y:-30},{x:0,y:+30}]
+  var positionsToCheck = [{
+    x: -30,
+    y: 0
+  }, {
+    x: 30,
+    y: 0
+  }, {
+    x: 0,
+    y: -30
+  }, {
+    x: 0,
+    y: +30
+  }]
 
-  for (var i in positionsToCheck){
+  for (var i in positionsToCheck) {
     var whichNode = network.getNodeAt({
-      x: pointerPosition.x +positionsToCheck[i].x,
-      y: pointerPosition.y+ positionsToCheck[i].y
+      x: pointerPosition.x + positionsToCheck[i].x,
+      y: pointerPosition.y + positionsToCheck[i].y
     });
-    if (whichNode !=undefined && dragedNode != whichNode){
+    if (whichNode != undefined && dragedNode != whichNode) {
 
       return whichNode
 

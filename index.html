@@ -15,35 +15,44 @@
 </head>
 
 <body>
-  <h1>Hi</h1>
   <!-- Edit Node  -->
   <div id='updateNode' class="updateElement">
-    <div id='updateNodePanel' class="updateElementPanel">
-      <form>
-        <input type="text" id='newNodeInput' autofocus=true><br>
-        <button id='updateNodeBtn' class="button-ok pure-button">Rename</button>
-        <button id='deleteNodeBtn' class="button-error pure-button">
+    <div id='updateNodePanel'>
+      <div class="updateElementPanel">
+        <form class="pure-form">
+          <div class="inputDiv">
+            <input type="text" id='newNodeInput' autofocus=true>
+          </div>
+          <div class='editDiv'>
+            <button id='updateNodeBtn' class="button-ok pure-button">Rename</button>
+            <button id='deleteNodeBtn' class="button-error pure-button">
+              <i class="fa fa-trash"></i>
+              Delete
+            </button>
+          </div>
+          <div class="optionsDiv">
+            <div id='optionBtn' class="option optionsBtn">Option</div>
+            <div id='questionBtn' class="question optionsBtn">Question</div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+    <!--  Edit Edge -->
+    <div id='updateEdge' class="updateElement">
+      <div id='updateEdgePanel' class="updateElementPanel">
+        <form class="pure-form">
+          <input type="text" id='newEdgeInput' autofocus=true><br>
+          <button id='updateEdgeBtn' class="button-ok pure-button updateElementBtn">Rename</button>
+          <button id='deleteEdgeBtn' class="button-error pure-button">
           <i class="fa fa-trash"></i>
           Delete
         </button>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
-  <!--  Edit Edge -->
-  <div id='updateEdge' class="updateElement">
-    <div id='updateEdgePanel' class="updateElementPanel">
-      <form>
-        <input type="text" id='newEdgeInput' autofocus=true><br>
-        <button id='updateEdgeBtn' class="button-ok pure-button updateElementBtn">Rename</button>
-        <button id='deleteEdgeBtn' class="button-error pure-button">
-          <i class="fa fa-trash"></i>
-          Delete
-        </button>
-      </form>
-    </div>
-  </div>
-  <div id='myNetwork'></div>
-  <script src="bin/app.js"></script>
+    <div id='myNetwork'></div>
+    <script src="bin/app.js"></script>
 </body>
 
 </html>
