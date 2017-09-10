@@ -67,6 +67,10 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
+//TODO:
+//check problems with UX of gestures
+//Check on mobile
+
 var vis = __webpack_require__(1);
 var $ = __webpack_require__(2);
 
@@ -111,7 +115,7 @@ var nodes = new vis.DataSet([{
   },
   {
     id: 3,
-    label: 'Node 3',    
+    label: 'Node 3',
     type: 'question',
     shape: 'ellipse',
     color:{
@@ -344,7 +348,7 @@ document.getElementById("updateNodeBtn").addEventListener("click", function(even
 //delete node
 document.getElementById('deleteNodeBtn').addEventListener('click', function(event) {
   event.preventDefault()
-  console.log(nodeObj.id)
+  
   //get edges that are connected
   var connectedEdges = network.getConnectedEdges(nodeObj.id)
 

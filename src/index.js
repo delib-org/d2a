@@ -1,3 +1,7 @@
+//TODO:
+//check problems with UX of gestures
+//Check on mobile
+
 var vis = require('vis');
 var $ = require('jquery');
 
@@ -42,7 +46,7 @@ var nodes = new vis.DataSet([{
   },
   {
     id: 3,
-    label: 'Node 3',    
+    label: 'Node 3',
     type: 'question',
     shape: 'ellipse',
     color:{
@@ -275,7 +279,7 @@ document.getElementById("updateNodeBtn").addEventListener("click", function(even
 //delete node
 document.getElementById('deleteNodeBtn').addEventListener('click', function(event) {
   event.preventDefault()
-  console.log(nodeObj.id)
+  
   //get edges that are connected
   var connectedEdges = network.getConnectedEdges(nodeObj.id)
 

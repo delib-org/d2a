@@ -5,6 +5,6 @@
 + dddsf
 
 # delete node and edge
-- delete node
-- delete edge
++ delete node
++ delete edge
 
