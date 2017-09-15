@@ -144,7 +144,7 @@ var options = {
 var network = new vis.Network(container, data, options);
 
 network.on('click', function(prm) {
-
+  console.log('click network')
 });
 
 var nodeObj = {
@@ -266,7 +266,8 @@ document.getElementById("updateNodeBtn").addEventListener("click", function(even
     label: newName,
     shape: 'box'
   })
-
+  
+  console.log('updateNode')
   $('#updateNode').hide(300)
 
   nodeObj = {
@@ -344,6 +345,7 @@ document.getElementById("updateEdgeBtn").addEventListener("click", function(even
     label: newLabel
   })
 
+  console.log('updateEdge')
   $('#updateEdge').hide(300)
 
   edgeObj = {
@@ -365,8 +367,11 @@ document.getElementById("deleteEdgeBtn").addEventListener("click", function(even
 });
 
 //cancel editing, by clicking on the screen
-document.getElementById("updateNode").addEventListener('click', function(event) {
+document.getElementById("closeEditNode").addEventListener('click', function(event) {
+  
+  event.stopPropagation();
 
+  console.log('hide 3')
   $('#updateNode').hide(300)
 
   nodeObj = {
