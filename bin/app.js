@@ -87,9 +87,9 @@ $(window).resize(function() {
 // create an array with nodes
 var nodes = new vis.DataSet([{
     id: 10,
-    label: 'Node 10',
+    label: 'Node 10 dg d dfg dfg dfg dfg',
     type: 'option',
-    shape: 'box',
+    shape: 'diamond',
     color:{
       background:'#C0CA33',
       highlight: '#AFB42B',
@@ -103,7 +103,7 @@ var nodes = new vis.DataSet([{
     id: 2,
     label: 'Node 2',
     type: 'option',
-    shape: 'box',
+    shape: 'diamond',
     color:{
       background:'#C0CA33',
       highlight: '#AFB42B',
@@ -204,16 +204,23 @@ var data = {
 };
 
 var options = {
+  nodes:{
+    widthConstraint:{
+      minimum:40,
+      maximum:120
+    }
+  },
   interaction: {
     hover: true
-  }
+  },
+  physics:{enabled:false}
 };
 
 // initialize your network!
 var network = new vis.Network(container, data, options);
 
 network.on('click', function(prm) {
-  console.log('click network')
+  
 });
 
 var nodeObj = {
@@ -281,7 +288,7 @@ network.on('doubleClick', function(prm) {
       shape: 'box'
     })
 
-    $('#updateNode').show(200);
+    $('#updateNode').show(400);
     $('#newNodeInput').focus().val('');
 
   }
@@ -335,9 +342,8 @@ document.getElementById("updateNodeBtn").addEventListener("click", function(even
     label: newName,
     shape: 'box'
   })
-  
-  console.log('updateNode')
-  $('#updateNode').hide(300)
+    
+  $('#updateNode').hide(300);
 
   nodeObj = {
     id: '',
@@ -414,8 +420,8 @@ document.getElementById("updateEdgeBtn").addEventListener("click", function(even
     label: newLabel
   })
 
-  console.log('updateEdge')
-  $('#updateEdge').hide(300)
+  
+  $('#updateEdge').hide(300);
 
   edgeObj = {
     id: '',
@@ -439,9 +445,8 @@ document.getElementById("deleteEdgeBtn").addEventListener("click", function(even
 document.getElementById("closeEditNode").addEventListener('click', function(event) {
   
   event.stopPropagation();
-
-  console.log('hide 3')
-  $('#updateNode').hide(300)
+  
+  $('#updateNode').hide(300);
 
   nodeObj = {
     id: '',
